@@ -199,8 +199,10 @@ static void handle_keypress(uint16_t keys, bool *quit)
 		// Open previous image in folder/file list
 		next_prev_img(-1);
 		break;
+		/*
 	case KEYPAD_VOLUME:
 		break;
+		*/
 	case KEYPAD_START:
 		state.fullscreen_enabled = !state.fullscreen_enabled;
 		if (!state.fullscreen_enabled) {

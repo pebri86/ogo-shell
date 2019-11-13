@@ -7,7 +7,7 @@
 #include <esp_system.h>
 #include <driver/gpio.h>
 
-#define LED_PIN GPIO_NUM_2
+#define LED_PIN GPIO_NUM_13
 
 void system_reboot_to_firmware(void)
 {
@@ -25,6 +25,7 @@ void system_reboot_to_firmware(void)
 
 void system_led_init(void)
 {
+	PIN_FUNC_SELECT(GPIO_PIN_MUX_REG[LED_PIN], PIN_FUNC_GPIO);
 	gpio_set_direction(LED_PIN, GPIO_MODE_OUTPUT);
 	gpio_set_level(LED_PIN, 0);
 }

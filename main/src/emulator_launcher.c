@@ -43,8 +43,8 @@ int emulator_launcher(EmulatorLauncherParam param)
 
 #ifndef SIM
 	nvs_handle handle;
-	static const char *nvskey_rom_path = "RomFilePath";
-	static const char *odroid_namespace = "Odroid";
+	static const char *nvskey_rom_path = "rom_name";
+	static const char *odroid_namespace = "esplay";
 
 	// Set rom file to path from entry
 	if (nvs_open(odroid_namespace, NVS_READWRITE, &handle) != ESP_OK) {

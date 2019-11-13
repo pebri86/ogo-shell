@@ -8,33 +8,24 @@
 
 #include "audio.h"
 
-#define AUDIO_IO_NEGATIVE GPIO_NUM_25
-#define AUDIO_IO_POSITIVE GPIO_NUM_26
+#define AUDIO_IO_SPEAKER GPIO_NUM_4
 #define I2S_NUM I2S_NUM_0
 
 static int audio_volume = 50;
 static float audio_volume_f = 0.5f;
 
 static bool initialized = false;
-static AudioOutput chosen_output = AudioOutputSpeaker;
+static AudioOutput chosen_output = AudioOutputDAC;
 
 static int shutdown_speaker()
 {
 	esp_err_t error;
 #define error_message "Could not shutdown dac or amplifier amp: %s\n"
-	if ((error = i2s_set_dac_mode(I2S_DAC_CHANNEL_DISABLE)) != ESP_OK) {
+	if ((error = gpio_set_direction(AUDIO_IO_SPEAKER, GPIO_MODE_OUTPUT)) != ESP_OK) {
 		fprintf(stderr, error_message, esp_err_to_name(error));
 		return -1;
 	}
-	if ((error = gpio_set_direction(AUDIO_IO_NEGATIVE, GPIO_MODE_OUTPUT)) != ESP_OK) {
-		fprintf(stderr, error_message, esp_err_to_name(error));
-		return -1;
-	}
-	if ((error = gpio_set_direction(AUDIO_IO_POSITIVE, GPIO_MODE_DISABLE)) != ESP_OK) {
-		fprintf(stderr, error_message, esp_err_to_name(error));
-		return -1;
-	}
-	if ((error = gpio_set_level(AUDIO_IO_NEGATIVE, 0)) != ESP_OK) {
+	if ((error = gpio_set_level(AUDIO_IO_SPEAKER, 0)) != ESP_OK) {
 		fprintf(stderr, error_message, esp_err_to_name(error));
 		return -1;
 	}
@@ -52,6 +43,10 @@ int audio_init(int audio_sample_rate, const AudioOutput output)
 		fprintf(stderr, "Audio already initialized!\n");
 		return -1;
 	}
+
+	PIN_FUNC_SELECT(GPIO_PIN_MUX_REG[GPIO_NUM_19], PIN_FUNC_GPIO);
+	gpio_set_direction(GPIO_NUM_19, GPIO_MODE_OUTPUT);
+
 	const i2s_mode_t mode_dac = I2S_MODE_MASTER | I2S_MODE_TX;
 	const i2s_mode_t mode_speaker = I2S_MODE_MASTER | I2S_MODE_TX | I2S_MODE_DAC_BUILT_IN;
 	const i2s_comm_format_t commfmt_dac = I2S_COMM_FORMAT_I2S | I2S_COMM_FORMAT_I2S_MSB;
@@ -67,9 +62,9 @@ int audio_init(int audio_sample_rate, const AudioOutput output)
 				   .intr_alloc_flags = ESP_INTR_FLAG_LEVEL1,
 				   .use_apll = output == true ? true : false};
 	const i2s_pin_config_t dac_pin_config = {
-	    .bck_io_num = 4,
-	    .ws_io_num = 12,
-	    .data_out_num = 15,
+	    .bck_io_num = 26,
+	    .ws_io_num = 25,
+	    .data_out_num = 19,
 	    .data_in_num = -1 // Not used
 	};
 

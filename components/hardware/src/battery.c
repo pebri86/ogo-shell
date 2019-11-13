@@ -11,7 +11,7 @@
 #include <freertos/semphr.h>
 
 #define DEFAULT_VREF 1100
-#define BATTERY_ADC_CHANNEL ADC1_CHANNEL_0
+#define BATTERY_ADC_CHANNEL ADC1_CHANNEL_3
 
 static bool battery_initialized = false;
 static esp_adc_cal_characteristics_t adc_characteristics;

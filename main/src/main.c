@@ -48,6 +48,7 @@ static void load_all_settings(void)
 
 static int app_init(void)
 {
+	audio_init(44100, AudioOutputDAC);
 	display_init();
 	backlight_init();
 	backlight_percentage_set(50);

@@ -2,16 +2,17 @@
 
 #include <stdint.h>
 
-enum { KEYPAD_UP = 1,
-       KEYPAD_RIGHT = 2,
-       KEYPAD_DOWN = 4,
-       KEYPAD_LEFT = 8,
-       KEYPAD_SELECT = 16,
-       KEYPAD_START = 32,
+enum { KEYPAD_START = 1,
+       KEYPAD_SELECT = 2,
+       KEYPAD_UP = 4,
+       KEYPAD_DOWN = 8,
+       KEYPAD_LEFT = 16,
+       KEYPAD_RIGHT = 32,
        KEYPAD_A = 64,
        KEYPAD_B = 128,
        KEYPAD_MENU = 256,
-       KEYPAD_VOLUME = 512,
+       KEYPAD_L = 512,
+       KEYPAD_R = 1024,
 };
 
 void keypad_init(void);

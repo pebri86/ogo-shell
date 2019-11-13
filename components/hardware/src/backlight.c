@@ -7,7 +7,7 @@
 
 static const int DUTY_MAX = 0x1fff;
 
-static const gpio_num_t LCD_PIN_NUM_BCKL = GPIO_NUM_14;
+static const gpio_num_t LCD_PIN_NUM_BCKL = GPIO_NUM_27;
 static const int LCD_BACKLIGHT_ON_VALUE = 1;
 static bool isBackLightIntialized = false;
 

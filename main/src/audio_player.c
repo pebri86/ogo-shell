@@ -452,8 +452,8 @@ static void draw_player(const PlayerState *const state)
 	// Show Playing or paused/DAC on image
 	tf_draw_str(fb, ui_font_white, state->playing ? "Pause" : "Continue", (point_t){.x = 222, .y = y + 10});
 	tf_draw_str(fb, ui_font_white, "Go back", (point_t){.x = 222, .y = y + 10 + 37});
-	tf_draw_str(fb, ui_font_white, audio_output_get() == AudioOutputSpeaker ? "Switch DAC" : "Switch Speaker",
-		    (point_t){.x = 222, .y = y + 10 + 37 * 2});
+	//tf_draw_str(fb, ui_font_white, audio_output_get() == AudioOutputSpeaker ? "Switch DAC" : "Switch Speaker",
+		    //(point_t){.x = 222, .y = y + 10 + 37 * 2});
 
 	// Display help image
 	gbuf_t img = {.width = (uint16_t)guide_img.width,
@@ -551,12 +551,13 @@ static void handle_keypress(event_keypad_t keys, bool *quit)
 	case KEYPAD_LEFT:
 		player_send_cmd(PlayerCmdPrev);
 		break;
+		/*
 	case KEYPAD_VOLUME:
 		// Toggle DAC/Speaker output mode
 		audio_output_set(audio_output_get() == AudioOutputDAC ? AudioOutputSpeaker : AudioOutputDAC);
 		player_send_cmd(PlayerCmdReinitAudio);
 		settings_save(SettingAudioOutput, (int32_t)audio_output_get());
-		break;
+		break;*/
 	case KEYPAD_START:
 		// Toggle playing mode
 		player_send_cmd(PlayerCmdToggleLoopMode);
